@@ -1,22 +1,28 @@
 * {
     box-sizing: border-box;
+    margin-top: .25%;
 }
 
 ul {
     list-style-type: none;
     display: flex;
     flex-direction: column;
-    height: 100%;
-    width: 10%;
+    height: 97.5%;
+    width: 15%;
     background-color: rgb(85, 85, 87);
-    position: fixed;    
+    position: fixed;
+    border-radius: 7.5px;
+    color: white;
+    gap: 3%;
+    align-items: center;
+    padding: 2%;
 }
 
-.container { 
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
+input, textarea { 
+    border-radius: 5px;
+    width: 100%;
+    max-width: 600px;
+    border: 2px solid #ccc;
 }
 
 a {
@@ -29,4 +35,33 @@ button {
     background-color: rgb(85, 85, 87);
     padding: 10px;
     border-radius: 7.5px;
+    color: white;
+}
+
+button:hover {
+    cursor: pointer;
+    background-color: rgb(20, 20, 20);
+}
+
+li:hover {
+    color: rgb(20, 20, 20);
+}
+
+.container { 
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.createTask {
+    padding: 2%;
+    gap: 5px;
+}
+
+.miniContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
 }
