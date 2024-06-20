@@ -1,21 +1,24 @@
-import React from 'react'
+import React, { forwardRef } from 'react'
 
-export default function CreateTask() {
+const CreateTask = forwardRef(function CreateTask({addTask}, ref) {
     return (
         <div className='container createTask'>
+            <button onClick={() => changeRender(0)}>Cancel</button>
             <div className='miniContainer'>
                 <label htmlFor="">Title</label>
-                <input type="text" />
+                <input type="text" ref={ref.titleRef} />
             </div>
             <div className='miniContainer'>
                 <label htmlFor="">Date</label>
-                <input type="date" />
+                <input type="date" ref={ref.dateRef} />
             </div>
             <div className='miniContainer'>
                 <label htmlFor="">Description</label>
-                <textarea name="" id=""></textarea>
+                <textarea name="" id="" ref={ref.descRef}></textarea>
             </div>
-            <button>Create Task</button>
+            <button onClick={addTask}>Create Task</button>
         </div>
     )
-}
+})
+
+export default CreateTask;
