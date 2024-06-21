@@ -3,10 +3,12 @@ import SideBar from './components/SideBar'
 import './App.css'
 import NewTask from './components/NewTask'
 import CreateTask from './components/CreateTask'
+import TaskMenu from './components/TaskMenu'
 
 function App() {
   const [toDoState, setToDoState] = useState(0)
   const [tasks, setTasks] = useState([])
+  const [taskId, setTaskId] = useState(0);
   const titleRef = useRef('')
   const dateRef = useRef('')
   const descRef = useRef('')
@@ -34,6 +36,11 @@ function App() {
     descRef.current.value = ''
   }
 
+  function selectTask(taskId) {
+    setToDoState(2);
+    setTaskId(taskId);
+  }
+
   let render;
   switch (toDoState) {
     case 0:
@@ -43,7 +50,8 @@ function App() {
       render = <CreateTask cancelTask={changeRenderState} addTask={addTask} ref={{titleRef, dateRef, descRef}} />
       break;
     case 2:
-      render = <p>Future toDo Task</p>
+      let task = tasks.find(t => t.id === taskId);
+      render = <TaskMenu title={task.title} date={task.date} desc={task.desc} />
       break;
     default:
       render = <NewTask changeRender={changeRenderState} />
@@ -55,7 +63,7 @@ function App() {
 
       </header>
       <main>
-        <SideBar changeRender={changeRenderState} tasks={tasks} />
+        <SideBar changeRender={changeRenderState} tasks={tasks} selectTask={selectTask}/>
         {render}
       </main>
     </>
