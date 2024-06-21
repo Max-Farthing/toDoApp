@@ -1,9 +1,9 @@
 import React, { forwardRef } from 'react'
 
-const CreateTask = forwardRef(function CreateTask({addTask}, ref) {
+const CreateTask = forwardRef(function CreateTask({cancelTask, addTask}, ref) {
     return (
         <div className='container createTask'>
-            <button onClick={() => changeRender(0)}>Cancel</button>
+            <button onClick={() => cancelTask(0)}>Cancel</button>
             <div className='miniContainer'>
                 <label htmlFor="">Title</label>
                 <input type="text" ref={ref.titleRef} />

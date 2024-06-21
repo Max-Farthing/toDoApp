@@ -6,7 +6,7 @@ import CreateTask from './components/CreateTask'
 
 function App() {
   const [toDoState, setToDoState] = useState(0)
-  const [tasks, setTasks] = useState([{}])
+  const [tasks, setTasks] = useState([])
   const titleRef = useRef('')
   const dateRef = useRef('')
   const descRef = useRef('')
@@ -26,7 +26,7 @@ function App() {
     setToDoState(0)
     
     setTasks(oldTasks => {
-      [...oldTasks, newTask]
+      return [...oldTasks, newTask]
     })
 
     titleRef.current.value = ''
@@ -40,7 +40,7 @@ function App() {
       render = <NewTask changeRender={changeRenderState} />
       break;
     case 1: 
-      render = <CreateTask addTask={addTask} ref={{titleRef, dateRef, descRef}} />
+      render = <CreateTask cancelTask={changeRenderState} addTask={addTask} ref={{titleRef, dateRef, descRef}} />
       break;
     case 2:
       render = <p>Future toDo Task</p>
