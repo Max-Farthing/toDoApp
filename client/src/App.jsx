@@ -12,6 +12,7 @@ function App() {
   const titleRef = useRef('')
   const dateRef = useRef('')
   const descRef = useRef('')
+  const stepRef = useRef('')
 
   function changeRenderState(id) {
     setToDoState(id)
@@ -22,11 +23,12 @@ function App() {
       id: Math.random(),
       title: titleRef.current.value,
       date: dateRef.current.value,
-      desc: descRef.current.value
+      desc: descRef.current.value,
+      steps: []
     }
 
     setToDoState(0)
-    
+
     setTasks(oldTasks => {
       return [...oldTasks, newTask]
     })
@@ -37,8 +39,25 @@ function App() {
   }
 
   function selectTask(taskId) {
-    setToDoState(2);
-    setTaskId(taskId);
+    setToDoState(2)
+    setTaskId(taskId)
+  }
+
+  function addStepsToTask() {
+    const step = stepRef.current.value
+    setTasks(oldTasks => {
+      console.log(step)
+      let index = tasks.findIndex(t => t.id === taskId)
+      const newTasks = [...oldTasks]
+      const updatedtask = {
+        ...newTasks[index],
+        steps: [...newTasks[index].steps, step]
+      }
+      newTasks[index] = updatedtask
+      
+      return newTasks
+    })
+    stepRef.current.value = ''
   }
 
   let render;
@@ -46,12 +65,19 @@ function App() {
     case 0:
       render = <NewTask changeRender={changeRenderState} />
       break;
-    case 1: 
-      render = <CreateTask cancelTask={changeRenderState} addTask={addTask} ref={{titleRef, dateRef, descRef}} />
+    case 1:
+      render = <CreateTask cancelTask={changeRenderState} addTask={addTask} ref={{ titleRef, dateRef, descRef }} />
       break;
     case 2:
       let task = tasks.find(t => t.id === taskId);
-      render = <TaskMenu title={task.title} date={task.date} desc={task.desc} />
+      render = <TaskMenu
+        addStep={addStepsToTask}
+        title={task.title}
+        date={task.date}
+        desc={task.desc}
+        steps={task.steps}
+        ref={stepRef}
+      />
       break;
     default:
       render = <NewTask changeRender={changeRenderState} />
@@ -63,7 +89,7 @@ function App() {
 
       </header>
       <main>
-        <SideBar changeRender={changeRenderState} tasks={tasks} selectTask={selectTask}/>
+        <SideBar changeRender={changeRenderState} tasks={tasks} selectTask={selectTask} />
         {render}
       </main>
     </>

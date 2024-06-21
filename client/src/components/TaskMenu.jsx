@@ -1,6 +1,6 @@
-import React from 'react'
+import React, { forwardRef } from 'react'
 
-export default function TaskMenu({ title, date, desc }) {
+const TaskMenu = forwardRef(function TaskMenu({ addStep, steps, title, date, desc }, ref) {
     return (
         <div className='container'>
             <button>Delete</button>
@@ -9,9 +9,19 @@ export default function TaskMenu({ title, date, desc }) {
             <p>{desc}</p>
             <div className='miniContainer'>
                 <label htmlFor="">Steps to Completion</label>
-                <input type="text" />
-                <button>Add</button>
+                <input type="text" ref={ref} />
+                <button onClick={addStep}>Add</button>
             </div>
+            <ul className='steps'>
+                {steps.length === 0 ?
+                    <p>No action plan yet</p> :
+                    steps.map((step, index) => (
+                        <li key={index}>{step}</li>
+                    ))
+                }
+            </ul>
         </div>
     )
-}
+})
+
+export default TaskMenu
