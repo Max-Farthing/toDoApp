@@ -38,6 +38,16 @@ function App() {
     descRef.current.value = ''
   }
 
+  function deleteTask() {
+    setToDoState(0)
+    setTasks(oldTasks => {
+      let index = oldTasks.findIndex(t => t.id === taskId)
+      const newTasks = [...oldTasks]
+      newTasks.splice(index, 1)
+      return newTasks
+    })
+  }
+
   function selectTask(taskId) {
     setToDoState(2)
     setTaskId(taskId)
@@ -46,7 +56,6 @@ function App() {
   function addStepsToTask() {
     const step = stepRef.current.value
     setTasks(oldTasks => {
-      console.log(step)
       let index = tasks.findIndex(t => t.id === taskId)
       const newTasks = [...oldTasks]
       const updatedtask = {
@@ -54,10 +63,25 @@ function App() {
         steps: [...newTasks[index].steps, step]
       }
       newTasks[index] = updatedtask
-      
+
       return newTasks
     })
     stepRef.current.value = ''
+  }
+
+  function deleteStepsFromTask(index) {
+    setTasks(oldTasks => {
+      let idx = tasks.findIndex(t => t.id === taskId)
+      const newTasks = [...oldTasks]
+      const updatedTask = {
+        ...newTasks[idx],
+        steps: [...newTasks[idx].steps]
+      }
+      updatedTask.steps.splice(index, 1)
+      newTasks[idx] = updatedTask
+
+      return newTasks
+    })
   }
 
   let render;
@@ -71,6 +95,8 @@ function App() {
     case 2:
       let task = tasks.find(t => t.id === taskId);
       render = <TaskMenu
+        deleteTask={deleteTask}
+        deleteStep={deleteStepsFromTask}
         addStep={addStepsToTask}
         title={task.title}
         date={task.date}

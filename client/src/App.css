@@ -67,5 +67,14 @@ li:hover {
 }
 
 .steps {
+    display: flex;
+    flex-direction: column;
     list-style-type: none;
+}
+
+.steps li {
+    padding-bottom: 5px;
+    padding-top: 5px;
+    border-color: rgb(85, 85, 87);
+    flex: 1;
 }

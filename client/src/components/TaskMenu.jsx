@@ -1,9 +1,9 @@
 import React, { forwardRef } from 'react'
 
-const TaskMenu = forwardRef(function TaskMenu({ addStep, steps, title, date, desc }, ref) {
+const TaskMenu = forwardRef(function TaskMenu({ deleteTask, deleteStep, addStep, steps, title, date, desc }, ref) {
     return (
         <div className='container'>
-            <button>Delete</button>
+            <button onClick={deleteTask}>Delete Task</button>
             <h1>{title}</h1>
             <h3>{date}</h3>
             <p>{desc}</p>
@@ -16,7 +16,10 @@ const TaskMenu = forwardRef(function TaskMenu({ addStep, steps, title, date, des
                 {steps.length === 0 ?
                     <p>No action plan yet</p> :
                     steps.map((step, index) => (
-                        <li key={index}>{step}</li>
+                        <div className='step-item'>
+                            <li key={index}>{step}</li>
+                            <button onClick={() => deleteStep(index)}>Delete step</button>
+                        </div>
                     ))
                 }
             </ul>
