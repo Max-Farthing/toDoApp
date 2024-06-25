@@ -23,19 +23,36 @@ function App() {
       id: Math.random(),
       title: titleRef.current.value,
       date: dateRef.current.value,
-      desc: descRef.current.value,
+      description: descRef.current.value,
       steps: []
     }
 
-    setToDoState(0)
-
-    setTasks(oldTasks => {
-      return [...oldTasks, newTask]
+    fetch('/api/posts', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(newTask)
     })
+    .then(response => {
+      if(!response.ok) {
+        throw new Error("Network response not ok")
+      }
+      return response.json()
+    })
+    .then(data => {
+      console.log(data)
+      setTasks(oldTasks => {
+        return [...oldTasks, newTask]
+      })
+      setToDoState(0)
 
-    titleRef.current.value = ''
-    dateRef.current.value = ''
-    descRef.current.value = ''
+      titleRef.current.value = ''
+      dateRef.current.value = ''
+      descRef.current.value = ''
+    })
+    .catch(err => console.log(err))
+
   }
 
   function deleteTask() {

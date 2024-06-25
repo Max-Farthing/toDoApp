@@ -1,11 +1,10 @@
 require('dotenv').config()
 const express = require('express')
 const mongoose = require('mongoose')
-const bodyParser = require('body')
 
 const app = express()
 
-app.use(bodyParser.json())
+app.use(express.json())
 
 app.use((req, res, next) => {
     res.setHeader('Access-Control-Allow-Origin', '*')
@@ -17,9 +16,10 @@ app.use((req, res, next) => {
     next()
 })
 
-app.get("/", (req, res) => {
-    res.json({ "test": ["Testing info sharing"] })
-})
+const postController = require('./controllers/posts')
+
+//posting tasks
+app.post("/api/posts", postController.createPost)
 
 const databaseConnection = process.env.DATABASE_URL
 mongoose

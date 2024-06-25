@@ -15,12 +15,15 @@ const taskSchema = new Schema(
             type: String,
             required: true
         },
-        steps: [],
-        creator: {
-            type: Schema.Types.ObjectId,
-            ref: 'User',
-            required: true
+        steps: {
+            type: [String],
+            default: []
         },
+        // creator: {
+        //     type: Schema.Types.ObjectId,
+        //     ref: 'User',
+        //     required: true
+        // },
     },
     { timestamps: true }
 )
