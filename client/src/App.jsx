@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import SideBar from './components/SideBar'
 import './App.css'
 import NewTask from './components/NewTask'
@@ -14,13 +14,22 @@ function App() {
   const descRef = useRef('')
   const stepRef = useRef('')
 
+  useEffect(() => {
+    fetch('/api/posts')
+    .then(response => response.json())
+    .then(data => {
+      console.log(data.post)
+      setTasks(data.post)
+    })
+    .catch(err => console.log(err))
+  }, [])
+
   function changeRenderState(id) {
     setToDoState(id)
   }
 
   function addTask() {
     const newTask = {
-      id: Math.random(),
       title: titleRef.current.value,
       date: dateRef.current.value,
       description: descRef.current.value,
@@ -34,38 +43,52 @@ function App() {
       },
       body: JSON.stringify(newTask)
     })
-    .then(response => {
-      if(!response.ok) {
-        throw new Error("Network response not ok")
-      }
-      return response.json()
-    })
-    .then(data => {
-      console.log(data)
-      setTasks(oldTasks => {
-        return [...oldTasks, newTask]
+      .then(response => {
+        if (!response.ok) {
+          throw new Error("Network response not ok")
+        }
+        return response.json()
       })
-      setToDoState(0)
+      .then(data => {
+        console.log(data)
+        const taskId = data.post._id
+        setTasks(oldTasks => {
+          return [...oldTasks, { ...newTask, _id: taskId }]
+        })
+        setToDoState(0)
 
-      titleRef.current.value = ''
-      dateRef.current.value = ''
-      descRef.current.value = ''
-    })
-    .catch(err => console.log(err))
-
+        titleRef.current.value = ''
+        dateRef.current.value = ''
+        descRef.current.value = ''
+      })
+      .catch(err => console.log(err))
   }
 
   function deleteTask() {
-    setToDoState(0)
-    setTasks(oldTasks => {
-      let index = oldTasks.findIndex(t => t.id === taskId)
-      const newTasks = [...oldTasks]
-      newTasks.splice(index, 1)
-      return newTasks
+    let index = tasks.findIndex(t => t.id === taskId)
+    const postId = tasks[index].id
+    fetch(`/api/posts/${postId}`, {
+      method: "DELETE",
     })
+      .then(response => {
+        console.log(response)
+        if (response.ok) {
+          setToDoState(0)
+          setTasks(oldTasks => {
+            const newTasks = [...oldTasks]
+            newTasks.splice(index, 1)
+            return newTasks
+          })
+        } else {
+          console.log("Error deleting post")
+        }
+      })
+      .catch(err => console.log(err))
+
   }
 
   function selectTask(taskId) {
+    console.log(taskId)
     setToDoState(2)
     setTaskId(taskId)
   }
@@ -128,9 +151,6 @@ function App() {
 
   return (
     <>
-      <header>
-
-      </header>
       <main>
         <SideBar changeRender={changeRenderState} tasks={tasks} selectTask={selectTask} />
         {render}

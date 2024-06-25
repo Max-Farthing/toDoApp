@@ -2,7 +2,14 @@ const Task = require('../models/task')
 const User = require('../models/user')
 
 exports.getPosts = (req, res, next) => {
-
+    Task.find()
+        .then(posts => {
+            res.status(200).json({
+                message: 'All posts grabbed',
+                post: posts
+            })
+        })
+        .catch(err => console.log(err))
 }
 
 exports.createPost = (req, res, next) => {
@@ -38,5 +45,13 @@ exports.updatePost = (req, res, next) => {
 }
 
 exports.deletePost = (req, res, next) => {
-    
+    const postId = req.params.postId
+    Task.findByIdAndDelete(postId)
+        .then(result => {
+            res.status(200).json({
+                message: 'Task deleted',
+                post: result
+            })
+        })
+        .catch(err => console.log(err))
 }

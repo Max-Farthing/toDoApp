@@ -18,8 +18,14 @@ app.use((req, res, next) => {
 
 const postController = require('./controllers/posts')
 
+//getting tasks
+app.get("/api/posts", postController.getPosts)
+
 //posting tasks
 app.post("/api/posts", postController.createPost)
+
+//deleting tasks
+app.delete("/api/posts/:postId", postController.deletePost)
 
 const databaseConnection = process.env.DATABASE_URL
 mongoose
