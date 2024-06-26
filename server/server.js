@@ -27,6 +27,12 @@ app.post("/api/posts", postController.createPost)
 //deleting tasks
 app.delete("/api/posts/:postId", postController.deletePost)
 
+//adding steps
+app.patch("/api/posts/:postId/steps", postController.addStep)
+
+//deleting step
+app.delete("/api/posts/:postId/steps/:stepId", postController.deleteStep)
+
 const databaseConnection = process.env.DATABASE_URL
 mongoose
     .connect(

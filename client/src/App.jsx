@@ -16,12 +16,14 @@ function App() {
 
   useEffect(() => {
     fetch('/api/posts')
-    .then(response => response.json())
-    .then(data => {
-      console.log(data.post)
-      setTasks(data.post)
-    })
-    .catch(err => console.log(err))
+      .then(response => response.json())
+      .then(data => {
+        for (let i = 0; i < data.post.length; i++) {
+          data.post[i] = { ...data.post[i], id: data.post[i]._id }
+        }
+        setTasks(data.post)
+      })
+      .catch(err => console.log(err))
   }, [])
 
   function changeRenderState(id) {
@@ -50,7 +52,6 @@ function App() {
         return response.json()
       })
       .then(data => {
-        console.log(data)
         const taskId = data.post._id
         setTasks(oldTasks => {
           return [...oldTasks, { ...newTask, _id: taskId }]
@@ -71,7 +72,6 @@ function App() {
       method: "DELETE",
     })
       .then(response => {
-        console.log(response)
         if (response.ok) {
           setToDoState(0)
           setTasks(oldTasks => {
@@ -88,40 +88,64 @@ function App() {
   }
 
   function selectTask(taskId) {
-    console.log(taskId)
     setToDoState(2)
     setTaskId(taskId)
   }
 
   function addStepsToTask() {
     const step = stepRef.current.value
-    setTasks(oldTasks => {
-      let index = tasks.findIndex(t => t.id === taskId)
-      const newTasks = [...oldTasks]
-      const updatedtask = {
-        ...newTasks[index],
-        steps: [...newTasks[index].steps, step]
-      }
-      newTasks[index] = updatedtask
+    let index = tasks.findIndex(t => t.id === taskId)
+    const postId = tasks[index].id
+    console.log(step)
 
-      return newTasks
+    fetch(`/api/posts/${postId}/steps`, {
+      method: "PATCH",
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ content: step })
     })
-    stepRef.current.value = ''
+      .then(response => {
+        return response.json()
+      })
+      .then(data => {
+        setTasks(oldTasks => {
+          const newTasks = [...oldTasks]
+          const updatedtask = {
+            ...newTasks[index],
+            steps: [...newTasks[index].steps, step]
+          }
+          newTasks[index] = updatedtask
+
+          stepRef.current.value = ''
+          return newTasks
+        })
+      })
+      .catch(err => console.log(err))
+
   }
 
   function deleteStepsFromTask(index) {
-    setTasks(oldTasks => {
-      let idx = tasks.findIndex(t => t.id === taskId)
-      const newTasks = [...oldTasks]
-      const updatedTask = {
-        ...newTasks[idx],
-        steps: [...newTasks[idx].steps]
-      }
-      updatedTask.steps.splice(index, 1)
-      newTasks[idx] = updatedTask
+    let idx = tasks.findIndex(t => t.id === taskId)
+    const postId = tasks[idx].id
 
-      return newTasks
+    fetch(`/api/posts/${postId}/steps/${index}`, {
+      method: "DELETE"
     })
+      .then(response => {
+        setTasks(oldTasks => {
+          const newTasks = [...oldTasks]
+          const updatedTask = {
+            ...newTasks[idx],
+            steps: [...newTasks[idx].steps]
+          }
+          updatedTask.steps.splice(index, 1)
+          newTasks[idx] = updatedTask
+
+          return newTasks
+        })
+      })
+      .catch(err => console.log(err))
   }
 
   let render;

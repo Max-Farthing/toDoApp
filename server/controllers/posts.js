@@ -40,8 +40,33 @@ exports.getPost = (req, res, next) => {
 
 }
 
-exports.updatePost = (req, res, next) => {
+exports.addStep = (req, res, next) => {
+    const postId = req.params.postId
+    const newStep = req.body.content
+    Task.findById(postId)
+        .then(post => {
+            post.steps.push(newStep)
+            return post.save()
+        })
+        .then(updatedTask => {
+            res.status(200).json({message: "Step added", post: updatedTask })
+        })
+        .catch(err => console.log(err))
+}
 
+exports.deleteStep = (req, res, next) => {
+    const postId = req.params.postId
+    const stepIndex = req.params.stepId
+    Task.findById(postId)
+        .then(task => {
+            task.steps.splice(stepIndex, 1)
+            return task.save()
+        })
+        .then(updatedTask => {
+            res.status(200).json({message: "Step deleted", post: updatedTask})
+        })
+        .catch(err => console.log(err))
+        
 }
 
 exports.deletePost = (req, res, next) => {
