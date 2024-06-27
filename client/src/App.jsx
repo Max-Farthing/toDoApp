@@ -53,8 +53,9 @@ function App() {
       })
       .then(data => {
         const taskId = data.post._id
+        console.log(taskId)
         setTasks(oldTasks => {
-          return [...oldTasks, { ...newTask, _id: taskId }]
+          return [...oldTasks, { ...newTask, id: taskId }]
         })
         setToDoState(0)
 
@@ -96,7 +97,7 @@ function App() {
     const step = stepRef.current.value
     let index = tasks.findIndex(t => t.id === taskId)
     const postId = tasks[index].id
-    console.log(step)
+    // console.log(postId)
 
     fetch(`/api/posts/${postId}/steps`, {
       method: "PATCH",
