@@ -4,6 +4,6 @@
 ### I used this project as a learning experience as it is my first attempt creating a fullstack app
 
 ### This App was created using:
-###  **React** for the Frontend
-###  **Express** to create a **REST API** for the backend
-###  **MongoDB** database
+###  ***React*** for the Frontend
+###  ***Express*** to create a ***REST API*** for the backend
+###  ***MongoDB*** database
