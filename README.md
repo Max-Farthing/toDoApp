@@ -56,8 +56,6 @@
         <li><a href="#installation">Installation</a></li>
       </ul>
     </li>
-    <li><a href="#usage">Usage</a></li>
-    <li><a href="#roadmap">Roadmap</a></li>
     <li><a href="#contact">Contact</a></li>
   </ol>
 </details>
@@ -76,8 +74,10 @@
 
 ### Built With
 
+* HTML/CSS
 * [![React][React.js]][React-url]
-* [![Node][Node.js]][Node-url]
+* NodeJs/Express
+* MongoDb
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -112,10 +112,6 @@ Max Farthing - maxfarthing1@gmail.com
 Project Link: [https://github.com/Max-Farthing/toDoApp](https://github.com/Max-Farthing/toDoApp)
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
-
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
-
-
 
 <!-- MARKDOWN LINKS & IMAGES -->
 <!-- https://www.markdownguide.org/basic-syntax/#reference-style-links -->
