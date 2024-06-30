@@ -18,7 +18,7 @@
 *** for contributors-url, forks-url, etc. This is an optional, concise syntax you may use.
 *** https://www.markdownguide.org/basic-syntax/#reference-style-links
 -->
-[[linkedin-url](https://www.linkedin.com/in/maximus-farthing/)]
+[![LinkedIn][linkedin-shield]][https://www.linkedin.com/in/maximus-farthing/]
 
 
 
@@ -28,7 +28,7 @@
   <a href="https://github.com/github_username/repo_name">
   </a>
 
-<h3 align="center">toDo List</h3>
+<h3 align="center">To Do List</h3>
 
   <p align="center">
     A simple to do list style application. Users can input a task that they need completed and then have the option
