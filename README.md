@@ -28,7 +28,7 @@
   <a href="https://github.com/Max-Farthing/toDoApp">
   </a>
 
-<h3 align="center">To Do List</h3>
+<h3 align="center">Todo List</h3>
 
   <p align="center">
     A simple to do list style application. Users can input a task that they need completed and then have the option
