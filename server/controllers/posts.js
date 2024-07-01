@@ -1,5 +1,4 @@
 const Task = require('../models/task')
-const User = require('../models/user')
 
 exports.getPosts = (req, res, next) => {
     Task.find()

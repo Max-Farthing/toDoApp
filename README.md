@@ -65,7 +65,7 @@
 <!-- ABOUT THE PROJECT -->
 ## About The Project
 
-[![Product Name Screen Shot][product-screenshot]](https://example.com)
+![image](https://github.com/Max-Farthing/toDoApp/assets/148821639/d5bb5a90-d5af-48db-a52e-1e77542134cb)
 
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
@@ -101,6 +101,16 @@ To run the program locally please follow the instructions below.
    npm install
    ```
 4. Repeat steps 2 and 3 for the server folder
+5. Navigate a terminal to the client folder
+   ```sh
+   cd client/
+   ```
+6. Run the following command
+  ```sh
+   npm run dev
+   ```
+7. Repeat steps 5 and 6 in the server folder
+    
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
